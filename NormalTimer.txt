@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+ <style>                                                                                               
+   body 
+   {
+        text-align: center;
+        background: #4169cc;
+   }
+   #time0, #time0-1
+   {
+        font-size: 20px;
+        font-family: "Comic Sans MS", cursive, sans-serif;
+   }
+   #time
+   {
+        font-size: 30px;
+        font-family: "Comic Sans MS", cursive, sans-serif;
+   }
+   h1.title
+   {
+        text-align: center;
+        font-size: 40px;
+        background-color: #000000;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        color: #ffffff;
+   }
+   #time1, #time2, #time3, #time4
+   {
+        padding-top: 10px;
+        padding-right: 20px;
+        padding-bottom: 10px;
+        padding-left: 20px;
+        border: 8px solid black;
+        background-color: darkblue;
+        display: inline-block;
+        color: white;
+   }
+ </style>
+ <script>                                                                                
+   var t, days, hours, minutes, seconds;
+   function getTime(deadline)
+   {
+        var timediff;
+        function displayTime()
+        {
+            var flag= 0;
+            document.getElementById("time0-1").innerHTML= "Deadline is "+ deadline+ "<br><br>";
+            timediff= getTotTime(deadline); 
+            if(timediff<=0) {flag= 1;}
+            days= Math.floor(timediff/86400);
+            timediff= timediff-(days*86400);
+            hours= Math.floor(timediff/3600);
+            timediff= timediff-(hours*3600);
+            minutes= Math.floor(timediff/60);
+            timediff= timediff-(minutes*60);
+            seconds= Math.floor(timediff);
+            document.getElementById("time").innerHTML= "Time before vacation starts:<br>";
+            document.getElementById("time1-0").innerHTML= days;
+            document.getElementById("time1-1").innerHTML="Days";
+            document.getElementById("time2-0").innerHTML= hours;
+            document.getElementById("time2-1").innerHTML="Hours";
+            document.getElementById("time3-0").innerHTML= minutes;
+            document.getElementById("time3-1").innerHTML="Minutes";
+            document.getElementById("time4-0").innerHTML= seconds; 
+            document.getElementById("time4-1").innerHTML="Seconds";
+            if(flag==1) { clearInterval(t); window.alert("Dealine reached!!"); return 0; }              //Stops the setTnterval function when deadline is reached.
+        }
+        t= setInterval(displayTime, 1000);                                                              //Calls the 'displayTime' function every 1 second.
+    }
+
+    function getTotTime(deadline)
+    {
+        document.getElementById("time0").innerHTML= "Current time is "+ new Date()+ "<br>";
+        var totTime= Date.parse(deadline)- Date.parse(new Date());                                      //Calculates the difference between current date-time and deadline. 
+        totTime= Math.floor(totTime/1000);
+        return totTime;
+    }
+
+    function addZero(time)
+    {
+        if(time<10) { return"0"+time; }
+        return time;
+    }   
+ </script>
+ <body onload="getTime('Monday May 30 2016 23:59:59 GMT+0530 (India Standard Time)')">                  <!--Deadline is 'Monday May 30 2016 23:59:59 GMT+0530 (India Standard Time)'.-->
+     <h1 class="title">Vacation</h1>
+
+     <div id="time0"></div>
+     <div id="time0-1"></div>
+     <div id="time"></div>
+     <div id="time1"><div id="time1-0"></div><span id="time1-1"></span></div></div>
+     <div id="time2"><div id="time2-0"></div><span id="time2-1"></span></div></div>
+     <div id="time3"><div id="time3-0"></div><span id="time3-1"></span></div></div>
+     <div id="time4"><div id="time4-0"></div><span id="time4-1"></span></div></div>
+ </body>
+</html> 

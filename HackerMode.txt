@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<style>
+body 
+{
+    text-align: center;
+    background: #4169cc;
+}
+p.fontstyle, #time0
+{
+    font-size: 20px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+#time, #time5
+{
+    font-size: 30px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+h1.title
+{
+    text-align: center;
+    font-size: 40px;
+    background-color: #000000;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    color: #ffffff;
+}
+#start, #stop, #reset
+{
+    background-color:#191970;
+    color:#ffffff;
+    padding-top: 10px;
+    padding-right: 30px;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    font-size: 25px;
+}
+#time1, #time2, #time3, #time4
+{
+    padding-top: 10px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    border: 8px solid black;
+    background-color: darkblue;
+    display: inline-block;
+    color: white;
+}
+</style>
+<script>
+function myFunction() 
+{
+    var deadline = document.getElementById("fname").value;
+    getTime(deadline);
+}
+var t, days, hours, minutes, seconds;
+function getTime(deadline)
+{
+    var timediff;
+    function displayTime()
+    {
+        var flag= 0;
+        timediff= getTotTime(deadline); 
+        if(timediff<=0) {flag= 1;}
+        days= Math.floor(timediff/86400);
+        timediff= timediff-(days*86400);
+        hours= Math.floor(timediff/3600);
+        timediff= timediff-(hours*3600);
+        minutes= Math.floor(timediff/60);
+        timediff= timediff-(minutes*60);
+        seconds= Math.floor(timediff);
+        document.getElementById("time").innerHTML= "Time before vacation starts: <br>";
+        document.getElementById("time1-0").innerHTML= days;
+        document.getElementById("time1-1").innerHTML="Days";
+        document.getElementById("time2-0").innerHTML= hours;
+        document.getElementById("time2-1").innerHTML="Hours";
+        document.getElementById("time3-0").innerHTML= minutes;
+        document.getElementById("time3-1").innerHTML="Minutes";
+        document.getElementById("time4-0").innerHTML= seconds; 
+        document.getElementById("time4-1").innerHTML="Seconds";
+        if(flag==1) {  window.alert("Dealine reached!!"); clearInterval(t); return 0; }                     //Stops the setTnterval function when deadline is reached.
+    }
+    t= setInterval(displayTime, 1000);                                                                      //Calls the 'displayTime' function every 1 second.
+}
+
+function getTotTime(deadline)
+{
+    document.getElementById("time0").innerHTML= "Current time is "+ new Date()+ "<br><br>";
+    var totTime= Date.parse(deadline)- Date.parse(new Date());                                              //Calculates the difference between current date-time and deadline.
+    totTime= Math.floor(totTime/1000);
+    return totTime;
+}
+
+function addZero(time)
+{
+    if(time<10) { return"0"+time; }
+    return time;
+}   
+
+function stop()
+{
+    clearInterval(t);
+}
+
+function reset()
+{
+    clearInterval(t);
+    days= hours= minutes= seconds= 0;
+    document.getElementById("time1-0").innerHTML= days;
+    document.getElementById("time1-1").innerHTML="Days";
+    document.getElementById("time2-0").innerHTML= hours;
+    document.getElementById("time2-1").innerHTML="Hours";
+    document.getElementById("time3-0").innerHTML= minutes;
+    document.getElementById("time3-1").innerHTML="Minutes";
+    document.getElementById("time4-0").innerHTML= seconds; 
+    document.getElementById("time4-1").innerHTML="Seconds";
+    document.getElementById("time5").innerHTML= "Enter a different dealine and submit it";
+}
+</script>
+<body>
+<h1 class="title">Vacation</h1>
+<pre><p class="fontstyle">Enter the deadline ( as a date )
+Example: Thursday May 27 2016 03:00:00 GMT+0530 (India Standard Time)</p></pre>
+<input type="text" id="fname">
+<input type="submit" onclick="myFunction()"><br><br>
+<span id="start" onclick="myFunction()">Start</span>
+<span id="stop" onclick="stop()">Stop</span>
+<span id="reset" onclick="reset()">Reset</span><br><br>
+<div id="time0"></div>
+<div id="time"></div>
+<div id="time1"><div id="time1-0"></div><span id="time1-1"></span></div></div>
+<div id="time2"><div id="time2-0"></div><span id="time2-1"></span></div></div>
+<div id="time3"><div id="time3-0"></div><span id="time3-1"></span></div></div>
+<div id="time4"><div id="time4-0"></div><span id="time4-1"></span></div></div>
+<p id="time5"></p>
+</body>
+</html> 
